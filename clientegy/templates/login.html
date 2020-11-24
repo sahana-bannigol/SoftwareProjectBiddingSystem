@@ -1,0 +1,22 @@
+{% extends 'home_base.html' %}
+{% block body %}
+<script>
+    function func(condition){
+    if(condition=="False"){
+        alert("Enter Correct Credentials");
+    }
+
+    }
+    func('{{valid}}')
+</script>
+<div class="container">
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        <br><p>Email ID {{valid}}</p>
+        <input type="email" name="email" class='form-control'><br>
+        <p>password</p>
+        <input type="password" name="password" class='form-control'><br><br>
+        <input type="submit" value="Login" class='btn btn-danger'>
+    </form>
+</div>
+{% endblock %}

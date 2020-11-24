@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from clientegy.views import home
+from clientegy.views import home,client_registration,freelancer_registration,login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home)
+    path('', home),
+    path('client_registration/',client_registration),
+    path('freelancer_registration/',freelancer_registration),
+    path('login/',login)
 ]

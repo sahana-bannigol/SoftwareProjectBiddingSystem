@@ -1,0 +1,36 @@
+{% extends 'home_base.html' %}
+{% block body %}
+<div class="container">
+    <form action="/freelancer_registration" method="post"><br>
+        {% csrf_token %}
+        <p>Name</p>
+        <input type="text" name="name" class="form-control"><hr>
+        <p>Age</p>
+        <input type="text" name="age" class="form-control"><hr>
+        <p>Email ID</p>
+        <input type="email" name="email" class="form-control"><hr>
+        <p>Phone No:</p>
+        <input type="tel" name="phoneNo" class="form-control" pattern="[0-9]{10}"><hr>
+        <p>Experience</p>
+            <input type="radio" name="experience"> Beginner<br>
+            <input type="radio" name="experience"> Intermediate<br>
+            <input type="radio" name="experience"> Expert<br>
+        <hr>
+        <p>Service</p>
+        <div class='radiobox'>
+            <input type="radio" name="service" class="checkbox">      Mobile Application
+        </div>
+        <div>
+            <input type="radio" name="service">      Web Application
+        </div>
+        <div>
+            <input type="radio" name="service">      Desktop Application
+        </div>
+        <hr><br>
+        <p>Cost</p>
+        <input type="radio" name="cost"> Hourly<br>
+            <input type="radio" name="cost"> Fixed<hr><br>
+        <button type="submit" class="btn btn-success">Sign-up</button>
+    </form>
+</div>
+{% endblock%}

@@ -1,0 +1,17 @@
+{% extends 'home_base.html' %}
+{% block body %}
+<div class="container">
+    <form action="/client_registration" method="post"><br>
+        {% csrf_token %}
+        <p>Name of the Company</p>
+        <input type="text" name="name" class="form-control"><hr>
+        <p>Age</p>
+        <input type="text" name="age" class="form-control"><hr>
+        <p>Email ID</p>
+        <input type="email" name="email" class="form-control"><hr>
+        <p>Phone No:</p>
+        <input type="tel" name="phoneNo" class="form-control" pattern="[0-9]{10}"><hr><br>
+        <button type="submit" class="btn btn-success">Sign-up</button>
+    </form>
+</div>
+{% endblock%}
