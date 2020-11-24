@@ -12,9 +12,9 @@
 <div class="container">
     <form action="/login/" method="post">
         {% csrf_token %}
-        <br><p>Email ID {{valid}}</p>
+        <br><p>Email ID </p>
         <input type="email" name="email" class='form-control'><br>
-        <p>password</p>
+        <p>Password</p>
         <input type="password" name="password" class='form-control'><br><br>
         <input type="submit" value="Login" class='btn btn-danger'>
     </form>

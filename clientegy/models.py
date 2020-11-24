@@ -10,6 +10,7 @@ class Developer(models.Model) :
     ph_no = models.CharField(max_length=10)
     service = models.TextField()
     email = models.TextField()
+    pass_dev = models.TextField(default= None)
 
 class Client(models.Model) :
     client_id = models.AutoField(primary_key= True)
@@ -17,6 +18,7 @@ class Client(models.Model) :
     age = models.IntegerField()
     email = models.TextField()
     ph_no = models.CharField(max_length=10)
+    pass_client = models.TextField(default= None)
 
 class Project(models.Model) :
     project_id = models.AutoField(primary_key= True)
