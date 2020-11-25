@@ -9,6 +9,11 @@
     }
     func('{{valid}}')
 </script>
+<script> 
+if ( window.history.replaceState ) { 
+    window.history.replaceState( null, null, window.location.href );
+}
+</script>
 <div class="container">
     <form action="/login/" method="post">
         {% csrf_token %}
@@ -16,7 +21,16 @@
         <input type="email" name="email" class='form-control'><br>
         <p>Password</p>
         <input type="password" name="password" class='form-control'><br><br>
-        <input type="submit" value="Login" class='btn btn-danger'>
+        <input type="submit" value="Login" class='btn btn-danger' >
     </form>
 </div>
+<script>
+    function passw(condition){
+        if(condition == "False"){
+            alert("Enter Valid Password");
+        }
+    }
+    passw('{{check_password}}')
+</script>
+
 {% endblock %}
