@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from clientegy.models import Developer,Client,Project
+from clientegy.models import Developer,Client,Project,PSRecord
 from django.http import HttpResponse
 
 
@@ -53,7 +53,8 @@ def login(request):
         try:
             userd = Developer.objects.get(email=email)
             if userd.pass_dev == entered_password:
-                return render(request, "view_all_projects.html")
+                dev_id=userd.dev_id
+                return redirect(f"/view_all_projects_dev/{dev_id}/")
             else:
                 check_password = False
                 return render(request,"login.html",{'check_password':check_password})
@@ -89,4 +90,39 @@ def project_delete(request,projectAndUser):
     projectobj=Project.objects.get(project_id=int(projectid))
     projectobj.delete()
     return redirect(f'/client_posted_projects/{client_id}/')
+
+def dev_posted_projects(request,dev_id):
+    devobj=Developer.objects.get(dev_id=dev_id)
+    domain=devobj.service
+    projectListObj=Project.objects.filter(domain=domain)
+    return render(request,'view_all_projects.html',{'projects':projectListObj,'dev_id':dev_id})
     
+def project_view_dev(request,projectAndUser):
+    if request.method=='POST':
+        dev_id,project_id,client_id=projectAndUser.split('&')
+        dev_name=Developer.objects.get(dev_id=dev_id).name
+        bid_price=request.POST['price']
+        PSRecord.objects.create(dev_id=dev_id,client_id=client_id,bid_price=bid_price,project_id=project_id,dev_name=dev_name)
+        return redirect(f'/view_project_dev/{dev_id}&{project_id}')
+    dev_id,projectid=projectAndUser.split('&')
+    projectobj=Project.objects.get(project_id=int(projectid))
+    clientObj=Client.objects.get(client_id=projectobj.client_id)
+    bidderListObj= PSRecord.objects.filter(project_id=projectid)
+    return render(request,'view_single_project_dev.html',{'project':projectobj,'dev_id':dev_id,'client':clientObj,'bidders':bidderListObj,'projectid':projectid})
+
+def applied_projects(request,dev_id):
+    listOfAppliedProjects= PSRecord.objects.filter(dev_id=dev_id)
+    NameAndPrice=[]
+    for i in listOfAppliedProjects:
+        dic=[]
+        name=Project.objects.get(client_id=i.client_id,project_id=i.project_id).title
+        print(name)
+        dic.append(name)
+        dic.append(i.bid_price)
+        dic.append(i.dev_id)
+        dic.append(i.project_id)
+        NameAndPrice.append(dic)
+    for i in NameAndPrice:
+        for j in i:
+            print(j,end=" ")
+    return render(request,'applied_projects_dev.html',{'appliedProjects':NameAndPrice,'dev_id':dev_id})

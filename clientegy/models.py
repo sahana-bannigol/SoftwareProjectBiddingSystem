@@ -32,6 +32,7 @@ class Project(models.Model) :
 class PSRecord(models.Model) :
     bid_price = models.IntegerField()
     dev_id = models.IntegerField()
+    dev_name=models.TextField(default=None)
     client_id = models.IntegerField()
     project_id = models.IntegerField()
 
