@@ -1,0 +1,13 @@
+{% extends 'base_client.html'%}
+{% block body%}
+<div class="container">
+    <br><p><b>Project Name:</b> {{project.title}}</p>
+    <p><b>Domain</b> : {{project.domain}}</p>
+    <b>Cost</b> : {{project.price_range}}</p>
+    <p>Description:</p>
+    {{project.description}}<br>
+    <br>
+    <br>
+    <a href="/delete_project/{{client_id}}&{{project.project_id}}/" class='btn btn-danger'>Delete this Project</a>
+</div>
+{% endblock%}

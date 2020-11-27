@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from clientegy.views import home,client_registration,freelancer_registration,login,post_project
+from clientegy.views import home,client_registration,freelancer_registration,login,post_project,posted_project,project_view_client,project_delete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,7 +23,11 @@ urlpatterns = [
     path('client_registration/',client_registration),
     path('freelancer_registration/',freelancer_registration),
     path('login/',login),
-    path('client_post_project/',post_project),
-    path('view_all_projects/',login)
+    path('client_post_project/<int:client_id>/',post_project),
+    path('client_posted_projects/<int:client_id>/',posted_project),
+    path('viewproject_client/<str:projectAndUser>/',project_view_client),#views details of the posted project of the client
+    path('delete_project/<str:projectAndUser>/',project_delete),
+    path('view_all_projects/',login),
+    
     
 ]

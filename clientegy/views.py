@@ -41,8 +41,8 @@ def post_project(request,client_id):
         experience_level = request.POST['experience']
         description = request.POST['description']
         range_price = request.POST['cost']
-        Project.objects.create(title = project_name,domain =domain, lvl_exp = experience_level, description = description, price_range = range_price)
-    return render(request,"client_post_project.html")
+        Project.objects.create(title = project_name,domain =domain, lvl_exp = experience_level, description = description, price_range = range_price,client_id=client_id)
+    return render(request,"client_post_project.html",{'client_id': client_id})
 
 def login(request):
     valid=True
@@ -62,7 +62,8 @@ def login(request):
             try:
                 userc = Client.objects.get(email=email)
                 if userc.pass_client == entered_password:
-                    return render(request, "client_post_project.html")
+                    client_id=userc.client_id
+                    return redirect(f'/client_post_project/{client_id}/')
                 else:
                     check_password = False
                     return render(request,"login.html",{'check_password':check_password})
@@ -72,3 +73,20 @@ def login(request):
                 valid=False
             
     return render(request,"login.html",{'valid':valid})
+
+
+def posted_project(request,client_id):
+    particualarClientproj= Project.objects.filter(client_id=client_id)
+    return render(request,'client_posted_projects.html',{'client_id': client_id,'posts':particualarClientproj})
+
+def project_view_client(request,projectAndUser):
+    client_id,projectid=projectAndUser.split('&')
+    projectobj=Project.objects.get(project_id=int(projectid))
+    return render(request,'view_single_project_client.html',{'project':projectobj,'client_id':client_id})
+
+def project_delete(request,projectAndUser):
+    client_id,projectid=projectAndUser.split('&')
+    projectobj=Project.objects.get(project_id=int(projectid))
+    projectobj.delete()
+    return redirect(f'/client_posted_projects/{client_id}/')
+    

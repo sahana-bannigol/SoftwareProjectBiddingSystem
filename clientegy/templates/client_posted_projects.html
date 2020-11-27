@@ -1,0 +1,12 @@
+{% extends 'base_client.html'%}
+{% block body%}
+{% for post in posts %}
+<div class='container'>
+    <div>
+      <br><p><b>Project Name</b> : <a href="/viewproject_client/{{client_id}}&{{post.project_id}}/">{{post.title}}</a></p>
+      <p><b>Domain</b> : {{post.domain}}</p>
+      <b>Cost</b> : {{post.price_range}}</p><hr><hr>
+    </div>
+</div>
+{% endfor%}
+{% endblock%}

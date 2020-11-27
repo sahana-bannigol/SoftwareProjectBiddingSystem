@@ -22,6 +22,7 @@ class Client(models.Model) :
 
 class Project(models.Model) :
     project_id = models.AutoField(primary_key= True)
+    client_id=models.IntegerField(default=None)
     title = models.TextField()
     description = models.TextField()
     domain = models.TextField()
