@@ -114,15 +114,16 @@ def applied_projects(request,dev_id):
     listOfAppliedProjects= PSRecord.objects.filter(dev_id=dev_id)
     NameAndPrice=[]
     for i in listOfAppliedProjects:
-        dic=[]
+        lis=[]
         name=Project.objects.get(client_id=i.client_id,project_id=i.project_id).title
         print(name)
-        dic.append(name)
-        dic.append(i.bid_price)
-        dic.append(i.dev_id)
-        dic.append(i.project_id)
-        NameAndPrice.append(dic)
-    for i in NameAndPrice:
-        for j in i:
-            print(j,end=" ")
+        lis.append(name)
+        lis.append(i.bid_price)
+        lis.append(i.dev_id)
+        lis.append(i.project_id)
+        NameAndPrice.append(lis)
     return render(request,'applied_projects_dev.html',{'appliedProjects':NameAndPrice,'dev_id':dev_id})
+
+def self_dev_profile(request,dev_id):
+    user=Developer.objects.get(dev_id=dev_id)
+    return render(request,'self_profile_freelancer.html',{'user':user,'dev_id':dev_id})
