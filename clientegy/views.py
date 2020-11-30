@@ -128,6 +128,6 @@ def self_dev_profile(request,dev_id):
     user=Developer.objects.get(dev_id=dev_id)
     return render(request,'self_profile_freelancer.html',{'user':user,'dev_id':dev_id})
 
-def self_client_profile(request,client_id):
-    user=Client.objects.get(client_id=client_id)
-    return render(request,'self_profile_client.html',{'user':user,'client_id':client_id})
+def self_client_profile(request, client_id):
+    user=Client.objects.get(client_id = client_id)
+    return render( request,'self_profile_client.html',{'user':user,'client_id':client_id})

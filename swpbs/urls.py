@@ -31,7 +31,7 @@ urlpatterns = [
     path('view_project_dev/<str:projectAndUser>/',project_view_dev),
     path('applied_projects/<int:dev_id>/',applied_projects),
     path('self_profile_dev/<int:dev_id>/',self_dev_profile),
-    path('self_profile_client/<int:client_id>/',self_client_profile)
+    path('self_profile_client/<int:client_id>/', self_client_profile)
     
     
 ]
