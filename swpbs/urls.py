@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from clientegy.views import home,client_registration,freelancer_registration,login,post_project,posted_project,project_view_client,project_delete,dev_posted_projects,project_view_dev,applied_projects,self_dev_profile,self_client_profile
+from clientegy.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,7 +31,12 @@ urlpatterns = [
     path('view_project_dev/<str:projectAndUser>/',project_view_dev),
     path('applied_projects/<int:dev_id>/',applied_projects),
     path('self_profile_dev/<int:dev_id>/',self_dev_profile),
-    path('self_profile_client/<int:client_id>/', self_client_profile)
+    path('self_profile_client/<int:client_id>/', self_client_profile),
+    path('edit_profile_client/<int:client_id>/',edit_profile_client),
+    path('edit_profile_dev/<int:dev_id>/',edit_profile_dev),
+    path('selected_freelancer_client/<str:projectAndUser>/',confirmation),
+    path('bill_final/<str:projectAndUser>/',bill_final),
+    path('client_finalized_projects/<int:client_id>/', finalized_project)
     
     
 ]

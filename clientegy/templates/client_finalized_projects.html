@@ -1,0 +1,15 @@
+{% extends 'base_client.html'%}
+{% block body%}
+{% for post in posts %}
+    {% if post.proj_selected_flag %}
+    <div class='container'>
+        <div>
+        <br><p><b>Project Name</b> : {{post.title}}</p>
+        <p><b>Domain</b> : {{post.domain}}</p>
+        <b>Cost</b> : {{post.price_range}}</p><hr><hr>
+        </div>
+    </div>
+    {% endif %}
+{% endfor%}
+{% endblock%}
+

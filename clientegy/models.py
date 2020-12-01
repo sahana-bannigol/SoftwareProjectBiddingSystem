@@ -11,6 +11,7 @@ class Developer(models.Model) :
     service = models.TextField()
     email = models.TextField()
     pass_dev = models.TextField(default= None)
+    dev_selected_flag = models.BooleanField(default=False)
 
 class Client(models.Model) :
     client_id = models.AutoField(primary_key= True)
@@ -28,6 +29,7 @@ class Project(models.Model) :
     domain = models.TextField()
     lvl_exp = models.TextField()
     price_range = models.IntegerField()
+    proj_selected_flag = models.BooleanField(default=False)
 
 class PSRecord(models.Model) :
     bid_price = models.IntegerField()
@@ -37,7 +39,7 @@ class PSRecord(models.Model) :
     project_id = models.IntegerField()
 
 class Final_bid(models.Model) :
-    date = models.DateField()
+    date = models.DateField(default= None)
     bid_price = models.IntegerField()
     dev_id = models.IntegerField()
     client_id = models.IntegerField()

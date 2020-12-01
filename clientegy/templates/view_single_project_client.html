@@ -4,12 +4,43 @@
     <br><p><b>Project Name:</b> {{project.title}}</p>
     <p><b>Domain</b> : {{project.domain}}</p>
     <b>Cost</b> : {{project.price_range}}</p>
-    <p>Description:</p>
-    {{project.description}}<br>
-    <br>
-    <b>Experience</b> : {{project.lvl_exp}}</p>
-    <br>
-    <br>
+    <p>Description:
+    {{project.description}}</p>
+</div>
+<style>
+    .table{
+        padding-left: 32px;
+        margin-left: 32px;
+    }
+</style>
+
+<table class="table" >
+    {%for bidder in bidders%}
+    <tr>
+        <td><p></p><b>Name :</b>{{bidder.dev_name}}</p>
+            <p><b>Bid price :</b>{{bidder.bid_price}}</p></td>    
+        <td>
+            <a href="/selected_freelancer_client/{{bidder.dev_id}}&{{project.project_id}}&{{client_id}}/" class='btn btn-danger' >Select Bidder</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<!-- <div class="container">
+    {%for bidder in bidders%}
+    <div class="container">
+        <hr><p></p><b>Name :</b>{{bidder.dev_name}}</p>
+        <p><b>Bid price :</b>{{bidder.bid_price}}</p>
+    </div>
+    <div class="container">
+        <a href="/selected_freelancer_client/{{client_id}}/" class='btn btn-danger'>Select Bidder</a>
+    </div>
+    {% endfor %}
+</div>
+<br>
+<br>
+<hr> -->
+<div class="container">
     <a href="/delete_project/{{client_id}}&{{project.project_id}}/" class='btn btn-danger'>Delete this Project</a>
 </div>
+
 {% endblock%}

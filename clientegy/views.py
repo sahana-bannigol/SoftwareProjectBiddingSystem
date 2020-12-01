@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from clientegy.models import Developer,Client,Project,PSRecord
+from clientegy.models import Developer,Client,Project,PSRecord,Final_bid
 from django.http import HttpResponse
 
 
@@ -80,10 +80,37 @@ def posted_project(request,client_id):
     particualarClientproj= Project.objects.filter(client_id=client_id)
     return render(request,'client_posted_projects.html',{'client_id': client_id,'posts':particualarClientproj})
 
+def finalized_project(request,client_id):
+    particualarClientproj= Project.objects.filter(client_id=client_id)
+    return render(request,'client_finalized_projects.html',{'client_id': client_id,'posts':particualarClientproj})
+
 def project_view_client(request,projectAndUser):
     client_id,projectid=projectAndUser.split('&')
     projectobj=Project.objects.get(project_id=int(projectid))
-    return render(request,'view_single_project_client.html',{'project':projectobj,'client_id':client_id})
+    bidderListObj= PSRecord.objects.filter(project_id=projectid)
+    return render(request,'view_single_project_client.html',{'project':projectobj,'client_id':client_id,'bidders':bidderListObj,'projectid':projectid})
+
+def confirmation(request,projectAndUser):
+    dev_id,project_id,client_id=projectAndUser.split('&')
+    dev_Obj=Developer.objects.get(dev_id=dev_id)
+    projectobj=Project.objects.get(project_id=int(project_id))
+    client_Obj = Client.objects.get(client_id = client_id)
+    bidderObj= PSRecord.objects.get(dev_id=dev_id , project_id=project_id)
+    print(bidderObj.bid_price)
+    return render(request,'selected_freelancer_client.html',{'project':projectobj,'client':client_Obj,'bidder':bidderObj,'dev':dev_Obj,'projectid':project_id})
+
+def bill_final(request,projectAndUser):
+    client_id,dev_id,project_id = projectAndUser.split('&')
+    BidObj = PSRecord.objects.get(dev_id=dev_id , project_id=project_id)
+    clientObj = Client.objects.get(client_id = client_id)
+    devObj = Developer.objects.get( dev_id = dev_id)
+    projectObj = Project.objects.get( project_id = project_id)
+    bid_price = BidObj.bid_price
+    devObj.dev_selected_flag = True
+    projectObj.proj_selected_flag = True
+    Final_bid.objects.create(dev_id=dev_id, client_id= client_id, bid_price=bid_price, project_id=project_id)
+    return render(request,'bill_final.html',{'client':clientObj,'dev':devObj,'project':projectObj,'bid_price':bid_price})
+
 
 def project_delete(request,projectAndUser):
     client_id,projectid=projectAndUser.split('&')
@@ -110,6 +137,7 @@ def project_view_dev(request,projectAndUser):
     bidderListObj= PSRecord.objects.filter(project_id=projectid)
     return render(request,'view_single_project_dev.html',{'project':projectobj,'dev_id':dev_id,'client':clientObj,'bidders':bidderListObj,'projectid':projectid})
 
+
 def applied_projects(request,dev_id):
     listOfAppliedProjects= PSRecord.objects.filter(dev_id=dev_id)
     NameAndPrice=[]
@@ -131,3 +159,30 @@ def self_dev_profile(request,dev_id):
 def self_client_profile(request, client_id):
     user=Client.objects.get(client_id = client_id)
     return render( request,'self_profile_client.html',{'user':user,'client_id':client_id})
+
+def edit_profile_client(request,client_id):
+    user=Client.objects.get(client_id=client_id)
+    if request.method=='POST':
+        user.name=request.POST['name']
+        user.email=request.POST['email']
+        user.ph_no=request.POST['phoneNo']
+        user.age=request.POST['age']
+        user.pass_client=request.POST['password']
+        user.save()
+        return redirect(f'/self_profile_client/{client_id}/')
+    return render(request,'edit_profile_client.html',{'user':user,'client_id':client_id})
+
+def edit_profile_dev(request,dev_id):
+    user=Developer.objects.get(dev_id=dev_id)
+    if request.method=='POST':
+        user.name=request.POST['name']
+        user.email=request.POST['email']
+        user.ph_no=request.POST['phoneNo']
+        user.age=request.POST['age']
+        user.pass_dev=request.POST['password']
+        user.exp = request.POST['experience']
+        user.service= request.POST['service']
+        user.cost = request.POST['cost']
+        user.save()
+        return redirect(f'/self_profile_dev/{dev_id}/')
+    return render(request,'edit_profile_dev.html',{'user':user,"dev_id":dev_id})
