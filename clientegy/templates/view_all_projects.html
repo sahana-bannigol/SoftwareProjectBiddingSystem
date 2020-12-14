@@ -1,0 +1,32 @@
+{% extends 'base_freelancer.html' %}
+{% block body %}
+
+<style>
+.edit {
+    padding-left: 32px;
+    margin-left: 20px;
+    }
+</style>
+{% if not projects_exists %}
+<h4>Projects under your selected domain has not been posted yet.</h4>
+{%else%}
+<h3><i><b>Projects of your domain up for bidding!</i></b></h3>
+{%for project in projects %}
+<div class="edit" >
+    <div>
+      <div>
+        <hr><p><b>Project Name</b> : <a href="/view_project_dev/{{project.project_id}}/">{{project.title}}</a></p>
+        <p><b>Domain</b> : {{project.domain}}</p>
+        <p><b>Experience</b> : {{project.lvl_exp}}</p>
+        <p><b>Project Description </b>: {{project.description}} </p>
+        <b>Cost</b> : {{project.offered_price}} ₹</p>
+        {% if project.proj_selected_flag%}
+        <p>This developer is already hired.</p>
+        {%endif%}
+        <p></p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {%endif%}
+  {% endblock %}

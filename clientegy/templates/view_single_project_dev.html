@@ -1,0 +1,32 @@
+{% extends 'base_freelancer.html'%}
+{% block body%}
+<div class="container">
+    <br><p><b>Project Name:</b> {{project.title}}</p>
+    <p><b>Domain</b> : {{project.domain}}</p>
+    <b>Cost</b> : {{project.offered_price}}</p>
+    <p><b>Description:</b></p>
+    {{project.description}}<br>
+    <br>
+    <b>Experience</b> : {{project.lvl_exp}}</p>
+    <b>Name of the company</b> : {{client.user.username}}</p>
+    <br>
+    {%if project.proj_selected_flag%}
+<h3>Developer has been aleady selected.</h3><hr>
+{%endif%}
+<div class="jumbotron">
+{%for bidder in bidders%}
+    <p></p><b>Name : </b><a href="/viewdev_profile/{{bidder.dev_id.dev_id}}/">{{bidder.dev_name}}</a></p>
+    <p><b>Bid price : </b>{{bidder.bid_price}} ₹</p><hr>
+{% endfor %}
+</div>
+{%if already_bidded %}
+<h4>You have already bid for this project.</h4>
+{%else%}
+<form action="/view_project_dev/{{projectid}}/" method="post" class="form control">
+    {% csrf_token %}
+    <input type="number" name="price"><br><br>
+    <button type="submit" class='btn btn-danger'>Bid for this price</button>
+</form>
+</div>
+{%endif%}
+{% endblock%}

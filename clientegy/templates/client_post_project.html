@@ -1,0 +1,26 @@
+{% extends 'base_client.html' %}
+{% block body %}
+<div class="container">
+    <form action="/client_post_project/" method="post"><br>
+        {% csrf_token %}
+        <p>Project Name</p>
+        <input type="text" name="project_name" class="form-control" placeholder="Enter Project Name" required><hr>
+        <p>Domain</p>
+            <input type="radio" name="domain" value= "Mobile Application"> Mobile Application<br>
+            <input type="radio" name="domain" value= "Web Application">  Web Application<br>
+            <input type="radio" name="domain" value= "Desktop Application"> Desktop Application<br>
+        <hr>
+        <p>Experince Level</p>
+            <input type="radio" name="experience" value= "Beginner"> Beginner<br>
+            <input type="radio" name="experience" value= "Intermediate">  Intermediate<br>
+            <input type="radio" name="experience" value= "Expert"> Expert<br>
+        <hr>
+        <p>Description</p>
+        <textarea name="description" class="form-control" placeholder="Fill in the Description about your project"></textarea> <hr>
+        <p>Quoted Price</p>
+        <input type="number" name="offered_price" class="form-control" placeholder="Offering Price" required><hr>
+        <br>
+        <button type="submit" class="btn btn-success">Post</button>
+    </form>
+</div>
+{% endblock%}
