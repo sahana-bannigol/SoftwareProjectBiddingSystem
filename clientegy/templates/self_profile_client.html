@@ -2,7 +2,7 @@
 
 {%block body%}
 <div class="container">
-    <div class="jumbotron">
+    <div class="alert alert-dismissible alert-info" style="margin-top: 10px;">
     <br>
     <br>
     <p><b>Name: </b>{{user.user.username}}</p>
@@ -10,7 +10,8 @@
     <p><b>Email: </b>{{user.user.email}}</p>
     <p><b>Phone No: </b>{{user.phone_no}}</p>
     <br><br>
-    <a href="/edit_profile_client/" class='btn btn-success btn-sm'>Edit Profile</a>
+    <a href="/edit_profile_client/" class='btn btn-primary btn-sm'>Edit Profile</a>
+    <br><br>
     </div>
 </div>
 
