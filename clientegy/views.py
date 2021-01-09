@@ -65,7 +65,7 @@ def client_registration(request):
             except User.DoesNotExist:
                 user = User.objects.create_user(username= username,email=email,password=password)
                 user.save()
-                Client.objects.create_user(user=user,age=age,phone_no=ph_no)
+                Client.objects.create(user=user,age=age,phone_no=ph_no)
                 registered = True
                 print('client created')
             finally:
@@ -190,7 +190,8 @@ def bill_final(request,psid):
     projectObj = BidObj.project_id
     bid_price = BidObj.bid_price
     projectObj.proj_selected_flag = True
-    Final_bid.objects.create(dev_id=devObj, client_id= clientObj, bid_price=bid_price, project_id=projectObj)
+    if(not Final_bid.objects.filter(dev_id=devObj, client_id= clientObj, bid_price=bid_price, project_id=projectObj).exists()):
+        Final_bid.objects.create(dev_id=devObj, client_id= clientObj, bid_price=bid_price, project_id=projectObj)
     projectObj.save()
     return render(request,'bill_final.html',{'client':clientObj,'dev':devObj,'project':projectObj,'bid_price':bid_price})
 
